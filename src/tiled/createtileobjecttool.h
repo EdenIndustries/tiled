@@ -48,6 +48,17 @@ public:
 
     void doUseStamp(bool bUse){ useStamp=bUse; }
 
+    /// <summary>
+    /// EDEN CHANGES
+    /// </summary>
+
+    void copySpecificProperties(MapObject* newMapObject, Tile* pTile);
+    void copySpecificPropertiesFromObject(MapObject* newMapObject, const MapObject* pSourceObject);
+    void randomizeProperties(MapObject* newMapObject, Tile* pTile, int iObjectIDIncrement = 0, bool bClearRandomizedProperties = false);
+
+    /// <summary>
+    /// EDEN CHANGES END
+    /// </summary>
     void languageChanged() override;
 
     void copySpecificProperties(MapObject* newMapObject, Tile* pTile);
