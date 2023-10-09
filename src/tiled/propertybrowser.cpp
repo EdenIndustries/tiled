@@ -2073,6 +2073,13 @@ void PropertyBrowser::updateCustomProperties()
     if (!mObject)
         return;
 
+    bool bOnlyShowSource = false;
+
+    if (mObject->wasRandomized() || mObject->hasProperty(QStringLiteral("RandomizedProp")))
+    {
+        bOnlyShowSource = true;
+    }
+
     UpdatingProperties updatingProperties(this, mUpdating);
 
     mCustomPropertiesHelper.clear();
@@ -2080,6 +2087,11 @@ void PropertyBrowser::updateCustomProperties()
     QMapIterator<QString,QVariant> it(combinedProperties());
     while (it.hasNext()) {
         it.next();
+
+        if (bOnlyShowSource && ((MapObject*)mObject)->IsPropertyRandomized(it.key()))
+        {
+            continue;
+        }
 
         QtVariantProperty *property = createCustomProperty(it.key(), it.value());
         mCustomPropertiesGroup->addSubProperty(property);
