@@ -551,6 +551,9 @@ void MapEditor::performStandardAction(StandardAction action)
     case PasteRightAction:
         paste(ClipboardManager::PasteRight);
         break;
+    case PastePreserveLayersAction:
+      paste(ClipboardManager::PastePreserveLayer);
+      break;
     //EDEN CHANGES END
 
     case DeleteAction:
