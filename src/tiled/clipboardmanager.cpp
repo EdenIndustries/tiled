@@ -301,6 +301,13 @@ void ClipboardManager::pasteObjectGroup(const ObjectGroup *objectGroup,
 
     mapDocument->undoStack()->push(command);
     mapDocument->setSelectedObjects(AddMapObjects::objects(objectsToAdd));
+
+    // EDEN CHANGE
+    if (flags & (PasteFlag::PasteUp | PasteFlag::PasteRight | PasteFlag::PasteDown | PasteFlag::PasteLeft))
+    {
+        copySelection(*mapDocument);
+    }
+    // EDEN CHANGE END
 }
 
 void ClipboardManager::update()

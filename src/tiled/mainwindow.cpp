@@ -563,7 +563,6 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
     connect(mUi->actionPasteDown, &QAction::triggered, this, &MainWindow::pasteDown);
     connect(mUi->actionPasteLeft, &QAction::triggered, this, &MainWindow::pasteLeft);
     connect(mUi->actionPasteRight, &QAction::triggered, this, &MainWindow::pasteRight);
-    connect(mUi->actionPasteRight, &QAction::triggered, this, &MainWindow::pasteRight);
 
     connect(mUi->actionPastePreserveLayers, &QAction::triggered, this, &MainWindow::pastePreserveLayers);
 
