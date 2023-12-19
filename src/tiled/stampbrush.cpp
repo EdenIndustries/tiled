@@ -36,6 +36,14 @@
 #include <QToolBar>
 #include <QVector>
 
+// EDEN CHANGES
+
+#include <documentmanager.h>
+#include <mapeditor.h>
+#include <tilesetdock.h>
+
+// END EDEN CHANGES
+
 #include <memory>
 
 using namespace Tiled;
@@ -471,7 +479,37 @@ void StampBrush::drawPreviewLayer(const QVector<QPoint> &points)
         Map *variation = randomVariations.pick();
         mapDocument()->unifyTilesets(*variation, mMissingTilesets);
 
+        // EDEN CHANGES
+
+        QPoint prev = points[0];
+
+        auto documentManager = DocumentManager::instance();
+        auto mapEditor = static_cast<MapEditor*>(documentManager->editor(Document::MapDocumentType));
+        TilesetDock *tilesetDock = mapEditor->tilesetDock();
+
+        int tileWidth =  mapDocument()->map()->tileWidth();
+        int tileHeight = mapDocument()->map()->tileHeight();
+
+        int stepx = tilesetDock->currentTile()->width() / tileWidth + mStamp.maxSize().width() - 1;
+        int stepy = tilesetDock->currentTile()->height() / tileHeight + mStamp.maxSize().height() - 1;
+
+        // END EDEN CHANGES
+
+        qDebug() << mStamp.maxSize() << tilesetDock->currentTile() << mapDocument()->map()->tileWidth() << stepx  << stepy;
+
         for (const QPoint &p : points) {
+
+            // EDEN CHANGES
+
+            if (p != prev && (abs(p.x() - prev.x()) < stepx && abs(p.y() - prev.y()) < stepy))
+            {
+                continue;
+            }
+
+            prev = p;
+
+            // END EDEN CHANGES
+
             Map *map = variation;
 
             // if staggered map, makes sure stamp stays the same
