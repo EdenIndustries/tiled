@@ -166,9 +166,13 @@ void TilePainter::drawStamp(const TileLayer *stamp,
                 if (cell.isEmpty())
                     continue;
 
-                mTileLayer->setCell(_x - mTileLayer->x(),
-                                    _y - mTileLayer->y(),
-                                    cell);
+                int mw = w/mMapDocument->map()->tileWidth();
+                int mh = h/mMapDocument->map()->tileHeight();
+
+                if (_x % mw == 0 && _y % mh == 0)
+                    mTileLayer->setCell(_x - mTileLayer->x(),
+                                        _y - mTileLayer->y(),
+                                        cell);
             }
         }
     }
