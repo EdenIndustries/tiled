@@ -277,6 +277,12 @@ void CreateTileObjectTool::randomizeProperties(MapObject* newMapObject, Tile* pT
 			QString property = i.key();
 			QString value = i.value().toString();
 
+            if (property == QStringLiteral("RandomizedProp"))
+            {
+                ++i;
+                continue;
+            }
+
 			if (newMapObject->IsPropertyRandomized(property))
 			{
 				newMapObject->removeProperty(property);
@@ -300,7 +306,7 @@ void CreateTileObjectTool::randomizeProperties(MapObject* newMapObject, Tile* pT
 		{
             QString rotation = value;
             QString minRot = rotation.left(rotation.indexOf(comma));
-            QString maxRot = rotation.right(rotation.indexOf(comma) + 1);
+            QString maxRot = rotation.right(value.length() - value.indexOf(comma) - 1);
 
 			int iMin = minRot.toInt();
 			int iMax = maxRot.toInt();
@@ -332,7 +338,7 @@ void CreateTileObjectTool::randomizeProperties(MapObject* newMapObject, Tile* pT
 			if (alpha.indexOf(comma) >= 0)
             {
                 QString minAlpha = alpha.left(alpha.indexOf(comma));
-                QString maxAlpha = alpha.right(alpha.indexOf(comma) + 1);
+                QString maxAlpha = alpha.right(value.length() - value.indexOf(comma) - 1);
 
 				float fMin = minAlpha.toFloat();
 				float fMax = maxAlpha.toFloat();
@@ -365,7 +371,7 @@ void CreateTileObjectTool::randomizeProperties(MapObject* newMapObject, Tile* pT
 			if (alpha.indexOf(comma) >= 0)
 			{
                 QString minAlpha = alpha.left(alpha.indexOf(comma));
-                QString maxAlpha = alpha.right(alpha.indexOf(comma) + 1);
+                QString maxAlpha = alpha.right(value.length() - value.indexOf(comma) - 1);
 
 				float fMin = minAlpha.toFloat();
 				float fMax = maxAlpha.toFloat();
@@ -393,7 +399,7 @@ void CreateTileObjectTool::randomizeProperties(MapObject* newMapObject, Tile* pT
 		{
             QString scale = value;
             QString minScale = scale.left(scale.indexOf(comma));
-            QString maxScale = scale.right(scale.indexOf(comma) + 1);
+            QString maxScale = scale.right(value.length() - value.indexOf(comma) - 1);
 
             float fMin = minScale.toFloat();
             float fMax = maxScale.toFloat();
@@ -432,17 +438,14 @@ void CreateTileObjectTool::randomizeProperties(MapObject* newMapObject, Tile* pT
 			newMapObject->setProperty(property, value);
 		}
 		else if (property.contains(QStringLiteral("RandomXOffset")))
-		{
+        {
             QString offset = value;
             QString minOffset = offset.left(offset.indexOf(comma));
-            QString maxOffset = offset.right(offset.indexOf(comma) + 1);
-
+            QString maxOffset = offset.right(value.length() - value.indexOf(comma) - 1);
             float fMin = minOffset.toFloat();
             float fMax = maxOffset.toFloat();
-
 			float fRandom = Randomf(fMin, fMax);
 
-			QString value;
 			value.setNum(fRandom);
 
 			newMapObject->setRandomized(true);
@@ -452,7 +455,7 @@ void CreateTileObjectTool::randomizeProperties(MapObject* newMapObject, Tile* pT
 		{
             QString offset = value;
             QString minOffset = offset.left(offset.indexOf(comma));
-            QString maxOffset = offset.right(offset.indexOf(comma) + 1);
+            QString maxOffset = offset.right(offset.length() - offset.indexOf(comma) - 1);
 
             float fMin = minOffset.toFloat();
             float fMax = maxOffset.toFloat();
@@ -469,7 +472,7 @@ void CreateTileObjectTool::randomizeProperties(MapObject* newMapObject, Tile* pT
 		{
             QString hue = value;
             QString minHue = hue.left(hue.indexOf(comma));
-            QString maxHue = hue.right(hue.indexOf(comma) + 1);
+            QString maxHue = hue.right(hue.length() - hue.indexOf(comma) - 1);
 
 			float fMin = minHue.toFloat();
 			float fMax = maxHue.toFloat();
@@ -492,7 +495,7 @@ void CreateTileObjectTool::randomizeProperties(MapObject* newMapObject, Tile* pT
 		{
             QString darken = value;
             QString minDarken = darken.left(darken.indexOf(comma));
-            QString maxDarken = darken.right(darken.indexOf(comma) + 1);
+            QString maxDarken = darken.right(value.length() - value.indexOf(comma) - 1);
 
 			float fMin = minDarken.toFloat();
 			float fMax = maxDarken.toFloat();
@@ -517,7 +520,7 @@ void CreateTileObjectTool::randomizeProperties(MapObject* newMapObject, Tile* pT
 		{
             QString alpha = value;
             QString minAlpha = alpha.left(alpha.indexOf(comma));
-            QString maxAlpha = alpha.right(alpha.indexOf(comma) + 1);
+            QString maxAlpha = alpha.right(value.length() - value.indexOf(comma) - 1);
 
 			float fMin = minAlpha.toFloat();
 			float fMax = maxAlpha.toFloat();
@@ -542,7 +545,7 @@ void CreateTileObjectTool::randomizeProperties(MapObject* newMapObject, Tile* pT
 		{
             QString saturation = value;
             QString minSaturation = saturation.left(saturation.indexOf(comma));
-            QString maxSaturation = saturation.right(saturation.indexOf(comma) + 1);
+            QString maxSaturation = saturation.right(value.length() - value.indexOf(comma) - 1);
 
             float fMin = minSaturation.toFloat();
             float fMax = maxSaturation.toFloat();

@@ -1665,7 +1665,9 @@ void MainWindow::randomizeLayer()
 void MainWindow::randomizeLevel()
 {
   auto mapDocument = qobject_cast<MapDocument*>(mDocument);
-	const QList<Layer*> &layers = mapDocument->map()->layers();
+    const QList<Layer*> &layers = mapDocument->map()->layers();
+
+  bool dirty = false;
 
 	for(Layer *layer : layers)
 	{
@@ -1678,11 +1680,16 @@ void MainWindow::randomizeLevel()
 				if (mapObject->cell().tile())
 				{
 					MainWindow::getMainWindow()->getCreateTileObjectTool()->copySpecificProperties(mapObject, mapObject->cell().tile());
-					MainWindow::getMainWindow()->getCreateTileObjectTool()->randomizeProperties(mapObject, mapObject->cell().tile(), 0, true);
-				}
+                    MainWindow::getMainWindow()->getCreateTileObjectTool()->randomizeProperties(mapObject, mapObject->cell().tile(), 0, true);
+                    dirty = true;
+                }
 			}
 		}
 	}
+    if (dirty)
+    {
+        mapDocument->undoStack()->resetClean();
+    }
 }
 //EDEN CHANGES END
 
