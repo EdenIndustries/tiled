@@ -20,6 +20,9 @@
 
 #include "mapeditor.h"
 
+/// EDEN CHANGES
+#include "addremovetiles.h"
+/// EDEN CHANGES END
 #include "addremovetileset.h"
 #include "bucketfilltool.h"
 #include "changeselectedarea.h"
@@ -354,6 +357,16 @@ void MapEditor::addDocument(Document *document)
     mWidgetStack->addWidget(view);
 
     restoreDocumentState(mapDocument);
+
+    /// EDEN CHANGES
+    if (hasMissingTiles(mapDocument)){
+        auto referencesTileset = [] (const Cell &cell) {
+            return cell.tileset() && cell.tile() == nullptr;
+        };
+
+        removeTileReferences(mapDocument, referencesTileset);
+    }
+    /// EDEN CHANGES END
 }
 
 void MapEditor::removeDocument(Document *document)

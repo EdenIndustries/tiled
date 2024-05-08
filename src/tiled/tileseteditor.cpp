@@ -803,43 +803,47 @@ static bool hasTileReferences(MapDocument *mapDocument,
     return false;
 }
 
-static void removeTileReferences(MapDocument *mapDocument,
-                                 std::function<bool(const Cell &)> condition)
-{
-    QUndoStack *undoStack = mapDocument->undoStack();
-    undoStack->beginMacro(QCoreApplication::translate("Undo Commands", "Remove Tiles"));
+/// EDEN CHANGES
 
-    QList<MapObject*> objectsToRemove;
+//static void removeTileReferences(MapDocument *mapDocument,
+//                                 std::function<bool(const Cell &)> condition)
+//{
+//    QUndoStack *undoStack = mapDocument->undoStack();
+//    undoStack->beginMacro(QCoreApplication::translate("Undo Commands", "Remove Tiles"));
 
-    LayerIterator it(mapDocument->map());
-    while (Layer *layer = it.next()) {
-        switch (layer->layerType()) {
-        case Layer::TileLayerType: {
-            auto tileLayer = static_cast<TileLayer*>(layer);
-            const QRegion refs = tileLayer->region(condition);
-            if (!refs.isEmpty())
-                undoStack->push(new EraseTiles(mapDocument, tileLayer, refs));
-            break;
-        }
-        case Layer::ObjectGroupType: {
-            auto objectGroup = static_cast<ObjectGroup*>(layer);
-            for (MapObject *object : *objectGroup) {
-                if (condition(object->cell()))
-                    objectsToRemove.append(object);
-            }
-            break;
-        }
-        case Layer::ImageLayerType:
-        case Layer::GroupLayerType:
-            break;
-        }
-    }
+//    QList<MapObject*> objectsToRemove;
 
-    if (!objectsToRemove.isEmpty())
-        undoStack->push(new RemoveMapObjects(mapDocument, objectsToRemove));
+//    LayerIterator it(mapDocument->map());
+//    while (Layer *layer = it.next()) {
+//        switch (layer->layerType()) {
+//        case Layer::TileLayerType: {
+//            auto tileLayer = static_cast<TileLayer*>(layer);
+//            const QRegion refs = tileLayer->region(condition);
+//            if (!refs.isEmpty())
+//                undoStack->push(new EraseTiles(mapDocument, tileLayer, refs));
+//            break;
+//        }
+//        case Layer::ObjectGroupType: {
+//            auto objectGroup = static_cast<ObjectGroup*>(layer);
+//            for (MapObject *object : *objectGroup) {
+//                if (condition(object->cell()))
+//                    objectsToRemove.append(object);
+//            }
+//            break;
+//        }
+//        case Layer::ImageLayerType:
+//        case Layer::GroupLayerType:
+//            break;
+//        }
+//    }
 
-    undoStack->endMacro();
-}
+//    if (!objectsToRemove.isEmpty())
+//        undoStack->push(new RemoveMapObjects(mapDocument, objectsToRemove));
+
+//    undoStack->endMacro();
+//}
+
+/// EDEN CHANGES END
 
 void TilesetEditor::removeTiles()
 {

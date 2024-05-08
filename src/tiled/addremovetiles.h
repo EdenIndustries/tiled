@@ -22,11 +22,97 @@
 
 #include <QUndoCommand>
 
+/// EDEN CHANGES
+#include "mapdocument.h"
+#include "tilelayer.h"
+#include "objectgroup.h"
+#include "erasetiles.h"
+#include "mapobject.h"
+#include "addremovemapobject.h"
+
+#include <QCoreApplication>
+
+/// EDEN CHANGES END
+
 namespace Tiled {
 
 class Tile;
 
 class TilesetDocument;
+
+/// EDEN CHANGES
+static bool hasMissingTiles(MapDocument *mapDocument)
+{
+
+    auto missingTile = [] (const Cell &cell) {
+        return cell.tileset() && cell.tile() == nullptr;
+    };
+
+    LayerIterator it(mapDocument->map());
+    while (Layer *layer = it.next()) {
+        switch (layer->layerType()) {
+        case Layer::TileLayerType: {
+            auto tileLayer = static_cast<TileLayer*>(layer);
+            const QRegion refs = tileLayer->region(missingTile);
+            if (!refs.isEmpty())
+                return true;
+            break;
+        }
+        case Layer::ObjectGroupType: {
+            auto objectGroup = static_cast<ObjectGroup*>(layer);
+            for (MapObject *object : *objectGroup) {
+                if (missingTile(object->cell()))
+                    return true;
+            }
+            break;
+        }
+        case Layer::ImageLayerType:
+        case Layer::GroupLayerType:
+            break;
+        }
+    }
+    return false;
+}
+
+static void removeTileReferences(MapDocument *mapDocument,
+                                 std::function<bool(const Cell &)> condition)
+{
+    QUndoStack *undoStack = mapDocument->undoStack();
+    undoStack->beginMacro(QCoreApplication::translate("Undo Commands", "Remove Tiles"));
+
+    QList<MapObject*> objectsToRemove;
+
+    LayerIterator it(mapDocument->map());
+    while (Layer *layer = it.next()) {
+        switch (layer->layerType()) {
+        case Layer::TileLayerType: {
+            auto tileLayer = static_cast<TileLayer*>(layer);
+            const QRegion refs = tileLayer->region(condition);
+            if (!refs.isEmpty())
+                undoStack->push(new EraseTiles(mapDocument, tileLayer, refs));
+            break;
+        }
+        case Layer::ObjectGroupType: {
+            auto objectGroup = static_cast<ObjectGroup*>(layer);
+            for (MapObject *object : *objectGroup) {
+                if (condition(object->cell()))
+                    objectsToRemove.append(object);
+            }
+            break;
+        }
+        case Layer::ImageLayerType:
+        case Layer::GroupLayerType:
+            break;
+        }
+    }
+
+    if (!objectsToRemove.isEmpty())
+        undoStack->push(new RemoveMapObjects(mapDocument, objectsToRemove));
+
+    undoStack->endMacro();
+}
+
+/// EDEN CHANGES END
 
 /**
  * Abstract base class for AddTiles and RemoveTiles.
