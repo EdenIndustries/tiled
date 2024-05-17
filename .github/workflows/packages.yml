@@ -63,14 +63,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-
-
     - name: Install Qt
       run: |
-        echo "2019"
-        ls "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/bin"
         echo "QT_PATH=$(./dist/install-qt.sh --version ${{ matrix.qt_version }} --toolchain ${{ matrix.qt_toolchain }} qtbase qtdeclarative qtsvg qtimageformats qttools qttranslations)" >> $GITHUB_ENV
-        #choco install visualstudio2022buildtools
         echo "OPENSSL_PATH=$(./dist/install-qt.sh --version ${OPENSSL_VERSION} openssl --arch ${{ matrix.openssl_arch }})" >> $GITHUB_ENV
 
     - name: Install Qbs
@@ -86,7 +81,7 @@ jobs:
     - name: Build Tiled
       run: |
         export TILED_MSI_VERSION=1.4.${GITHUB_RUN_NUMBER}
-        qbs build config:debug projects.Tiled.windowsInstaller:true
+        qbs build config:debug projects.Tiled.windowsInstaller:true qbs.debugInformation:true
         mv debug/installer*/Tiled-*.msi .
 
     - name: Upload Tiled installer
