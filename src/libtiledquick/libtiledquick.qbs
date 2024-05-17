@@ -1,5 +1,6 @@
 DynamicLibrary {
     targetName: "tiledquick"
+    cpp.dynamicLibraryPrefix: "lib"
     builtByDefault: false
 
     Depends { name: "libtiled" }
