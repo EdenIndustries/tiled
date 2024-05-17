@@ -45,7 +45,7 @@ Product {
         }
         property string postfix: {
             var suffix = "";
-            if (qbs.targetOS.contains("windows") && qbs.debugInformation && Qt.core.versionMajor < 6 && Qt.core.versionMinor < 15)
+            if (qbs.targetOS.contains("windows") && qbs.debugInformation)
                 suffix += "d";
             return suffix + cpp.dynamicLibrarySuffix;
         }
