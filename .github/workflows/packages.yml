@@ -87,7 +87,7 @@ jobs:
       run: |
         export TILED_MSI_VERSION=1.4.${GITHUB_RUN_NUMBER}
         qbs build config:debug projects.Tiled.windowsInstaller:true
-        mv release/installer*/Tiled-*.msi .
+        mv debug/installer*/Tiled-*.msi .
 
     - name: Upload Tiled installer
       uses: actions/upload-artifact@v4
