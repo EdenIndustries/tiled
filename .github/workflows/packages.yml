@@ -89,6 +89,8 @@ jobs:
         mkdir builddir
         cd builddir
         cmake ..
+        pwd
+        ls
         make
         popd
 
