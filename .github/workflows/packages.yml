@@ -99,7 +99,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Tiled-win${{ matrix.arch }}
-        path: release/install-root/*
+        path: debug/install-root/*
 
   github:
     name: Upload to GitHub releases
