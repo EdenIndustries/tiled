@@ -46,9 +46,12 @@
 #include <memory>
 
 #ifdef Q_OS_WIN
-
 #define WIN32_LEAN_AND_MEAN
+///EDEN CHANGES
 #include <windows.h>
+#include <winapifamily.h>
+#include <minidumpapiset.h>
+///EDEN CHANGES END
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QtGui/private/qguiapplication_p.h>
@@ -412,8 +415,9 @@ void CommandLineHandler::startNewInstance()
     newInstance = true;
 }
 
-
-int main(int argc, char *argv[])
+///EDEN CHANGES this used to be main
+int _main(int argc, char *argv[])
+/// EDEN CHANGES END
 {
 #if defined(Q_OS_WIN) && (!defined(Q_CC_MINGW) || __GNUC__ >= 5)
     // Make console output work on Windows, if running in a console.
@@ -628,3 +632,54 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
+
+/// EDEN CHANGES
+void dumpFunction(unsigned int u, EXCEPTION_POINTERS* pException)
+{
+    Q_UNUSED (u);
+    QFile dump(QLatin1String("./dump.dmp"));
+    if (dump.open(QIODevice::WriteOnly))
+    {
+        auto hFile = (HANDLE)_get_osfhandle(dump.handle());
+        MINIDUMP_EXCEPTION_INFORMATION mdei;
+
+        mdei.ThreadId = GetCurrentThreadId();
+        mdei.ExceptionPointers = pException;
+        mdei.ClientPointers = FALSE;
+
+        MINIDUMP_TYPE mdt = MiniDumpNormal;
+
+        MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(),
+                                         hFile, mdt, (pException != 0) ? &mdei : 0, 0, 0);
+    }
+
+    dump.close();
+
+    MessageBoxA(NULL, "Tiled has crashed, please send the .dmp and .pdb files to the coder responsible for the area that caused this crash.", "SHUTDOWN ERROR", MB_OK | MB_ICONINFORMATION);
+}
+
+int main(int argc, char *argv[])
+{
+
+#if defined (Q_OS_WIN)
+    if (IsDebuggerPresent())
+    {
+        _main(argc, argv);
+    }
+    else
+    {
+        _set_se_translator(dumpFunction);
+        try
+        {
+            _main(argc, argv);
+        }
+        catch (...)
+        {
+            return -1;
+        }
+    }
+#else
+    _main(argc, argv);
+#endif
+}
+/// EDEN CHANGES END

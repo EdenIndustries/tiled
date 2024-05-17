@@ -45,16 +45,14 @@ jobs:
         include:
         - qt_version: 6.7.2
           qt_version_major: 6
-          qt_toolchain: win64_mingw
+          qt_toolchain: win64_msvc2019_64 
           arch: 64
           openssl_arch: x64
-          mingw_version: 9.0.0
-          mingw_component: mingw90
-          mingw_path: /c/Qt/Tools/mingw1120_64/bin
+          msvc_path: /c/Qt/Tools/msvc2019_64/bin
 
     env:
       TILED_VERSION: ${{ needs.version.outputs.version }}
-      MINGW_PATH: ${{ matrix.mingw_path }}
+      MSVC_PATH: ${{ matrix.msvc_path }}
       OPENSSL_VERSION: 1.1.1
 
     defaults:
@@ -68,7 +66,7 @@ jobs:
     - name: Install Qt
       run: |
         echo "QT_PATH=$(./dist/install-qt.sh --version ${{ matrix.qt_version }} --toolchain ${{ matrix.qt_toolchain }} qtbase qtdeclarative qtsvg qtimageformats qttools qttranslations)" >> $GITHUB_ENV
-        ./dist/install-qt.sh --version ${{ matrix.mingw_version }} --toolchain win${{ matrix.arch }}_mingw ${{ matrix.mingw_component }}
+        winget install --id Microsoft.VisualStudio.2022.Community
         echo "OPENSSL_PATH=$(./dist/install-qt.sh --version ${OPENSSL_VERSION} openssl --arch ${{ matrix.openssl_arch }})" >> $GITHUB_ENV
 
     - name: Install Qbs
@@ -77,7 +75,7 @@ jobs:
 
     - name: Setup Qbs
       run: |
-        qbs setup-toolchains ${MINGW_PATH}/*-w64-mingw32-gcc.exe mingw
+        qbs setup-toolchains --detect 
         qbs setup-qt ${QT_PATH}/qmake.exe qt
         qbs config defaultProfile qt
 

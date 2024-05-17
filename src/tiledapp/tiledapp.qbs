@@ -13,6 +13,11 @@ TiledQtGuiApplication {
     Depends { name: "Qt.gui-private"; condition: qbs.targetOS.contains("windows") && Qt.core.versionMajor >= 6 }
     Depends { name: "texttemplate"; condition: qbs.targetOS.contains("windows") }
 
+    /// EDEN CHANGES
+    Depends { name: "cpp" }
+    cpp.staticLibraries: ["dbghelp", "user32"]
+    cpp.exceptionHandlingModel: "seh"
+    /// EDEN CHANGES END
     property bool qtcRunnable: true
 
     cpp.includePaths: {
