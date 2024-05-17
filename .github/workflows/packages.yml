@@ -43,7 +43,7 @@ jobs:
     strategy:
       matrix:
         include:
-        - qt_version: 6.7.2
+        - qt_version: 6.7.0
           qt_version_major: 6
           qt_toolchain: win64_msvc2019_64 
           arch: 64
