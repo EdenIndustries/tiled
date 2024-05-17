@@ -81,7 +81,7 @@ jobs:
 
     - name: Build Zstandard
       run: |
-        curl -o zstd.zip https://github.com/facebook/zstd/releases/download/v1.5.5/zstd-v1.5.5-win64.zip
+        curl -o zstd.zip -LO https://github.com/facebook/zstd/releases/download/v1.5.5/zstd-v1.5.5-win64.zip
         unzip zstd.zip
         cp zstd/static/libzstd_static.lib libzstd.lib
 
