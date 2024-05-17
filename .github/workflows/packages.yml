@@ -81,10 +81,10 @@ jobs:
 
     - name: Build Zstandard
       run: |
-        export PATH="${MINGW_PATH}:$PATH"
+        choco install make
         git clone --depth 1 -b release https://github.com/facebook/zstd.git
         pushd zstd/lib
-        CC=gcc mingw32-make -j2 libzstd.a
+        make -j2
         popd
 
     - name: Build Tiled
