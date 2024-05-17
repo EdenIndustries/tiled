@@ -66,12 +66,10 @@ jobs:
     - name: Install Qt
       run: |
         echo "2019"
-        ls "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise"
-        echo "BuildTools"
-        ls "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/BuildTools"
-        #echo "QT_PATH=$(./dist/install-qt.sh --version ${{ matrix.qt_version }} --toolchain ${{ matrix.qt_toolchain }} qtbase qtdeclarative qtsvg qtimageformats qttools qttranslations)" >> $GITHUB_ENV
-        #choco install visualstudio2022buildtools
-        #echo "OPENSSL_PATH=$(./dist/install-qt.sh --version ${OPENSSL_VERSION} openssl --arch ${{ matrix.openssl_arch }})" >> $GITHUB_ENV
+        ls "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/bin"
+        echo "QT_PATH=$(./dist/install-qt.sh --version ${{ matrix.qt_version }} --toolchain ${{ matrix.qt_toolchain }} qtbase qtdeclarative qtsvg qtimageformats qttools qttranslations)" >> $GITHUB_ENV
+        choco install visualstudio2022buildtools
+        echo "OPENSSL_PATH=$(./dist/install-qt.sh --version ${OPENSSL_VERSION} openssl --arch ${{ matrix.openssl_arch }})" >> $GITHUB_ENV
 
     - name: Install Qbs
       run: |
@@ -85,7 +83,7 @@ jobs:
 
     - name: Build Zstandard
       run: |
-        export PATH="/c/Program\ Files\ (x86)/Microsoft\ Visual\ Studio/2019/Enterprise/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64:$PATH"
+        export PATH="/c/Program Files\ (x86)/Microsoft\ Visual\ Studio/2019/Enterprise/MSBuild/Current/bin:/c/Program\ Files\ (x86)/Microsoft\ Visual\ Studio/2019/Enterprise/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64:$PATH"
         choco install make
         choco install cmake
         git clone --depth 1 -b release https://github.com/facebook/zstd.git
