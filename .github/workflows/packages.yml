@@ -83,7 +83,9 @@ jobs:
       run: |
         curl -LO https://github.com/facebook/zstd/releases/download/v1.5.5/zstd-v1.5.5-win64.zip
         unzip zstd-v1.5.5-win64.zip
-        cp zstd-v1.5.5-win64/static/libzstd_static.lib libzstd.lib
+        mkdir -p zstd/lib
+        cp zstd-v1.5.5-win64/static/libzstd_static.lib zstd/lib/libzstd.lib
+        cp -R zstd-v1.5.5-win64/include/* zstd/lib/
 
     - name: Build Tiled
       run: |
