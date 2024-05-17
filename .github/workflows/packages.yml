@@ -63,6 +63,8 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+
+
     - name: Install Qt
       run: |
         echo "2019"
@@ -81,23 +83,10 @@ jobs:
         qbs setup-qt ${QT_PATH}/qmake.exe qt
         qbs config defaultProfile qt
 
-    - name: Build Zstandard
-      run: |
-        export PATH="/c/Program Files\ (x86)/Microsoft\ Visual\ Studio/2019/Enterprise/MSBuild/Current/bin:/c/Program\ Files\ (x86)/Microsoft\ Visual\ Studio/2019/Enterprise/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64:$PATH"
-        choco install make
-        choco install cmake
-        git clone --depth 1 -b release https://github.com/facebook/zstd.git
-        pushd zstd/build/cmake
-        mkdir builddir
-        cd builddir
-        cmake ..
-        "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/bin/MSBuild.exe" zstd.sln
-        popd
-
     - name: Build Tiled
       run: |
         export TILED_MSI_VERSION=1.4.${GITHUB_RUN_NUMBER}
-        qbs build config:rebug projects.Tiled.windowsInstaller:true projects.Tiled.staticZstd:true
+        qbs build config:rebug projects.Tiled.windowsInstaller:true
         mv release/installer*/Tiled-*.msi .
 
     - name: Upload Tiled installer
