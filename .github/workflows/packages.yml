@@ -89,9 +89,7 @@ jobs:
         mkdir builddir
         cd builddir
         cmake ..
-        pwd
-        ls
-        make
+        msbuild zstd.sln
         popd
 
     - name: Build Tiled
