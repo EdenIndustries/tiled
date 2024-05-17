@@ -81,10 +81,11 @@ jobs:
 
     - name: Build Zstandard
       run: |
+        export PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64:$PATH"
         choco install make
         git clone --depth 1 -b release https://github.com/facebook/zstd.git
         pushd zstd/lib
-        mingw32-make -j2 libzstd.a
+        CC=cl.exe make -j2 libzstd.a
         popd
 
     - name: Build Tiled
