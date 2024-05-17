@@ -84,13 +84,14 @@ jobs:
         curl -LO https://github.com/facebook/zstd/releases/download/v1.5.5/zstd-v1.5.5-win64.zip
         unzip zstd-v1.5.5-win64.zip
         mkdir -p zstd/lib
-        cp zstd-v1.5.5-win64/static/libzstd_static.lib zstd/lib/libzstd.lib
+        cp zstd-v1.5.5-win64/static/libzstd_static.lib zstd/lib/zstd.lib
+        cp zstd-v1.5.5-win64/static/libzstd_static.lib zstd.lib
         cp -R zstd-v1.5.5-win64/include/* zstd/lib/
 
     - name: Build Tiled
       run: |
         export TILED_MSI_VERSION=1.4.${GITHUB_RUN_NUMBER}
-        qbs build config:release projects.Tiled.windowsInstaller:true projects.Tiled.staticZstd:true
+        qbs build config:rebug projects.Tiled.windowsInstaller:true projects.Tiled.staticZstd:true
         mv release/installer*/Tiled-*.msi .
 
     - name: Upload Tiled installer
