@@ -84,7 +84,7 @@ jobs:
         choco install make
         git clone --depth 1 -b release https://github.com/facebook/zstd.git
         pushd zstd/lib
-        make -j2
+        make -j2 libzstd.a
         popd
 
     - name: Build Tiled
