@@ -481,18 +481,23 @@ void StampBrush::drawPreviewLayer(const QVector<QPoint> &points)
 
         // EDEN CHANGES
 
+        int stepx = 0;
+        int stepy = 0;
+
+
         QPoint prev = points[0];
 
         auto documentManager = DocumentManager::instance();
         auto mapEditor = static_cast<MapEditor*>(documentManager->editor(Document::MapDocumentType));
         TilesetDock *tilesetDock = mapEditor->tilesetDock();
 
-        int tileWidth =  mapDocument()->map()->tileWidth();
-        int tileHeight = mapDocument()->map()->tileHeight();
-
-        int stepx = tilesetDock->currentTile()->width() / tileWidth + mStamp.maxSize().width() - 1;
-        int stepy = tilesetDock->currentTile()->height() / tileHeight + mStamp.maxSize().height() - 1;
-
+        if (tilesetDock->currentTile())
+        {
+            int tileWidth =  mapDocument()->map()->tileWidth();
+            int tileHeight = mapDocument()->map()->tileHeight();
+            stepx = tilesetDock->currentTile()->width() / tileWidth + mStamp.maxSize().width() - 1;
+            stepy = tilesetDock->currentTile()->height() / tileHeight + mStamp.maxSize().height() - 1;
+        }
         // END EDEN CHANGES
 
         qDebug() << mStamp.maxSize() << tilesetDock->currentTile() << mapDocument()->map()->tileWidth() << stepx  << stepy;
