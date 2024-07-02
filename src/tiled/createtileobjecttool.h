@@ -57,10 +57,6 @@ public:
 
     void languageChanged() override;
 
-    void copySpecificProperties(MapObject* newMapObject, Tile* pTile);
-    void copySpecificPropertiesFromObject(MapObject* newMapObject, const MapObject* pSourceObject);
-    void randomizeProperties(MapObject* newMapObject, Tile* pTile, int iObjectIDIncrement=0, bool bClearRandomizedProperties=false);
-
 protected:
     void mouseMovedWhileCreatingObject(const QPointF &pos,
                                        Qt::KeyboardModifiers modifiers) override;
