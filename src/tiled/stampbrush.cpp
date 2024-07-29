@@ -392,9 +392,30 @@ static void shiftColumns(TileLayer *tileLayer, Map::StaggerIndex staggerIndex)
     }
 }
 
-void StampBrush::drawPreviewLayer(const QVector<QPoint> &points)
+void StampBrush::drawPreviewLayer(const QVector<QPoint> &c_points)
 {
+    QVector<QPoint> points = c_points;
     mPreviewMap.clear();
+    Map::Parameters mapParameters = mapDocument()->map()->parameters();
+
+    Preferences *preferences = Preferences::instance();
+    if (preferences->snapToOverride())
+    {
+        auto documentManager = DocumentManager::instance();
+        auto mapEditor = static_cast<MapEditor*>(documentManager->editor(Document::MapDocumentType));
+        TilesetDock *tilesetDock = mapEditor->tilesetDock();
+        if ( tilesetDock->currentTile())
+        {
+            for (QPoint &p : points)
+            {
+                float rx = (float)mapParameters.tileWidth / tilesetDock->currentTile()->width();
+                float ry = (float)mapParameters.tileHeight / tilesetDock->currentTile()->height();
+                p.setX(floor(p.x() * rx) / rx);
+                p.setY(ceil(p.y() * ry) / ry);
+                p.setY(p.y() + ry - 1);
+            }
+        }
+    }
 
     if (mStamp.isEmpty() && !mIsWangFill)
         return;
@@ -412,7 +433,7 @@ void StampBrush::drawPreviewLayer(const QVector<QPoint> &points)
         for (const QPoint &p : points)
             bounds |= QRect(p, p);
 
-        Map::Parameters mapParameters = mapDocument()->map()->parameters();
+
         mapParameters.width = bounds.width();
         mapParameters.height = bounds.height();
         mapParameters.infinite = false;
@@ -499,8 +520,6 @@ void StampBrush::drawPreviewLayer(const QVector<QPoint> &points)
             stepy = tilesetDock->currentTile()->height() / tileHeight + mStamp.maxSize().height() - 1;
         }
         // END EDEN CHANGES
-
-        qDebug() << mStamp.maxSize() << tilesetDock->currentTile() << mapDocument()->map()->tileWidth() << stepx  << stepy;
 
         for (const QPoint &p : points) {
 
@@ -629,6 +648,8 @@ void StampBrush::drawPreviewLayer(const QVector<QPoint> &points)
  */
 void StampBrush::updatePreview()
 {
+
+
     updatePreview(tilePosition());
 }
 

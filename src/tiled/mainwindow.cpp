@@ -309,6 +309,9 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
     ActionManager::registerAction(mUi->actionSnapToFineGrid, "SnapToFineGrid");
     ActionManager::registerAction(mUi->actionSnapToGrid, "SnapToGrid");
     ActionManager::registerAction(mUi->actionSnapToPixels, "SnapToPixels");
+    /// EDEN CHANGES
+    ActionManager::registerAction(mUi->actionSnapToOverride, "SnapToOverride");
+    /// END EDEN CHANGES
     ActionManager::registerAction(mUi->actionTilesetProperties, "TilesetProperties");
     ActionManager::registerAction(mUi->actionZoomIn, "ZoomIn");
     ActionManager::registerAction(mUi->actionZoomNormal, "ZoomNormal");
@@ -423,6 +426,9 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
     auto snappingGroup = new QActionGroup(this);
     mUi->actionSnapNothing->setActionGroup(snappingGroup);
     mUi->actionSnapToGrid->setActionGroup(snappingGroup);
+    /// EDEN CHANGES
+    mUi->actionSnapToOverride->setActionGroup(snappingGroup);
+    /// END EDEN CHANGES
     mUi->actionSnapToFineGrid->setActionGroup(snappingGroup);
     mUi->actionSnapToPixels->setActionGroup(snappingGroup);
 
@@ -433,6 +439,9 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
     mUi->actionShowTileCollisionShapes->setChecked(preferences->showTileCollisionShapes());
     mUi->actionEnableParallax->setChecked(preferences->parallaxEnabled());
     mUi->actionSnapToGrid->setChecked(preferences->snapToGrid());
+    /// EDEN CHANGES
+    mUi->actionSnapToOverride->setChecked(preferences->snapToOverride());
+    /// END EDEN CHANGES
     mUi->actionSnapToFineGrid->setChecked(preferences->snapToFineGrid());
     mUi->actionSnapToPixels->setChecked(preferences->snapToPixels());
     mUi->actionHighlightCurrentLayer->setChecked(preferences->highlightCurrentLayer());
@@ -588,6 +597,10 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
             preferences, &Preferences::setParallaxEnabled);
     connect(mUi->actionSnapToGrid, &QAction::toggled,
             preferences, &Preferences::setSnapToGrid);
+    /// EDEN CHANGES
+    connect(mUi->actionSnapToOverride, &QAction::toggled,
+            preferences, &Preferences::setSnapToOverride);
+    /// END EDEN CHANGES
     connect(mUi->actionSnapToFineGrid, &QAction::toggled,
             preferences, &Preferences::setSnapToFineGrid);
     connect(mUi->actionSnapToPixels, &QAction::toggled,

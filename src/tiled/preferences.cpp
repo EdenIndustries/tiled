@@ -170,6 +170,13 @@ bool Preferences::snapToGrid() const
     return get("Interface/SnapToGrid", false);
 }
 
+/// EDEN CHANGES
+bool Preferences::snapToOverride() const
+{
+    return get("Interface/SnapToOverride", false);
+}
+/// END EDEN CHANGES
+
 bool Preferences::snapToFineGrid() const
 {
     return get("Interface/SnapToFineGrid", false);
@@ -349,6 +356,14 @@ void Preferences::setSnapToGrid(bool snapToGrid)
     setValue(QLatin1String("Interface/SnapToGrid"), snapToGrid);
     emit snapToGridChanged(snapToGrid);
 }
+
+/// EDEN CHANGES
+void Preferences::setSnapToOverride(bool snapToOverride)
+{
+    setValue(QLatin1String("Interface/SnapToOverride"), snapToOverride);
+    emit snapToOverrideChanged(snapToOverride);
+}
+/// END EDEN CHANGES
 
 void Preferences::setSnapToFineGrid(bool snapToFineGrid)
 {

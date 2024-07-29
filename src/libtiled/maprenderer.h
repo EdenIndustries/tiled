@@ -140,7 +140,9 @@ public:
 
     virtual QPointF snapToGrid(const QPointF &pixelCoords,
                                int subdivisions = 1) const;
-
+    /// EDEN CHANGES
+    virtual QPointF snapToOverride(const QPointF &pixelCoords, const QPointF gridOverride) const;
+    /// END EDEN CHANGES
     using RenderTileCallback = std::function<void (QPoint, const QPointF &)>;
 
     /**

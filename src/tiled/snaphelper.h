@@ -34,6 +34,8 @@ public:
     
     void toggleFineSnap();
 
+    void toggleOverrideSnap();
+
     bool snaps() const { return mSnapMode != NoSnap || mSnapToPixels; }
 
     void snap(QPointF &pixelPos) const;
@@ -44,7 +46,8 @@ private:
     enum SnapMode {
         NoSnap,
         SnapToGrid,
-        SnapToFineGrid
+        SnapToFineGrid,
+        SnapToOverride
     };
 
     SnapMode mSnapMode = NoSnap;

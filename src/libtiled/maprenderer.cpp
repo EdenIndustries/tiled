@@ -248,6 +248,19 @@ QPointF MapRenderer::snapToGrid(const QPointF &pixelCoords, int subdivisions) co
     return tileToPixelCoords(tileCoords);
 }
 
+/// EDEN CHANGES
+QPointF MapRenderer::snapToOverride(const QPointF &pixelCoords, const QPointF gridOverride) const
+{
+    QPointF tileCoords = pixelToTileCoords(pixelCoords);
+
+    float rx =  map()->tileWidth() / gridOverride.x();
+    float ry = map()->tileHeight() / gridOverride.y();
+    tileCoords.setX(qRound(tileCoords.x() * rx) / rx);
+    tileCoords.setY(qRound(tileCoords.y() * ry) / ry);
+    return tileToPixelCoords(tileCoords);
+}
+/// END EDEN CHANGES
+
 void MapRenderer::drawTileLayer(QPainter *painter, const TileLayer *layer, const QRectF &exposed) const
 {
     const QSize tileSize = map()->tileSize();

@@ -38,7 +38,7 @@
      <x>0</x>
      <y>0</y>
      <width>553</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -113,7 +113,6 @@
     <addaction name="actionPaste"/>
     <addaction name="actionPasteInPlace"/>
     <addaction name="actionDelete"/>
-    <!--EDEN CHANGE-->
     <addaction name="actionPasteUp"/>
     <addaction name="actionPasteDown"/>
     <addaction name="actionPasteLeft"/>
@@ -122,7 +121,6 @@
     <addaction name="actionRandomize"/>
     <addaction name="actionRandomizeLayer"/>
     <addaction name="actionRandomizeLevel"/>
-    <!--EDEN CHANGE END-->
     <addaction name="separator"/>
     <addaction name="actionPreferences"/>
    </widget>
@@ -173,6 +171,7 @@
      <addaction name="actionSnapToGrid"/>
      <addaction name="actionSnapToFineGrid"/>
      <addaction name="actionSnapToPixels"/>
+     <addaction name="actionSnapToOverride"/>
     </widget>
     <addaction name="actionSearchActions"/>
     <addaction name="actionShowGrid"/>
@@ -288,112 +287,102 @@
     <string>&amp;Paste</string>
    </property>
   </action>
-  <!--EDEN CHANGE-->
   <action name="actionPasteUp">
-    <property name="enabled">
-      <bool>false</bool>
-    </property>
-    <property name="icon">
-      <iconset resource="tiled.qrc">
-        <normaloff>:/images/16x16/edit-paste.png</normaloff>:/images/16x16/edit-paste.png
-      </iconset>
-    </property>
-    <property name="text">
-      <string>&amp;PasteUp</string>
-    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/16x16/edit-paste.png</normaloff>:/images/16x16/edit-paste.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;PasteUp</string>
+   </property>
   </action>
   <action name="actionPasteDown">
-    <property name="enabled">
-      <bool>false</bool>
-    </property>
-    <property name="icon">
-      <iconset resource="tiled.qrc">
-        <normaloff>:/images/16x16/edit-paste.png</normaloff>:/images/16x16/edit-paste.png
-      </iconset>
-    </property>
-    <property name="text">
-      <string>&amp;PasteDown</string>
-    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/16x16/edit-paste.png</normaloff>:/images/16x16/edit-paste.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;PasteDown</string>
+   </property>
   </action>
   <action name="actionPasteLeft">
-    <property name="enabled">
-      <bool>false</bool>
-    </property>
-    <property name="icon">
-      <iconset resource="tiled.qrc">
-        <normaloff>:/images/16x16/edit-paste.png</normaloff>:/images/16x16/edit-paste.png
-      </iconset>
-    </property>
-    <property name="text">
-      <string>&amp;PasteLeft</string>
-    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/16x16/edit-paste.png</normaloff>:/images/16x16/edit-paste.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;PasteLeft</string>
+   </property>
   </action>
   <action name="actionPasteRight">
-    <property name="enabled">
-      <bool>false</bool>
-    </property>
-    <property name="icon">
-      <iconset resource="tiled.qrc">
-        <normaloff>:/images/16x16/edit-paste.png</normaloff>:/images/16x16/edit-paste.png
-      </iconset>
-    </property>
-    <property name="text">
-      <string>&amp;PasteRight</string>
-    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/16x16/edit-paste.png</normaloff>:/images/16x16/edit-paste.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;PasteRight</string>
+   </property>
   </action>
   <action name="actionPastePreserveLayers">
-    <property name="enabled">
-      <bool>false</bool>
-    </property>
-    <property name="icon">
-      <iconset resource="tiled.qrc">
-        <normaloff>:/images/16x16/edit-paste.png</normaloff>:/images/16x16/edit-paste.png
-      </iconset>
-    </property>
-    <property name="text">
-      <string>&amp;PastePreserveLayers</string>
-    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/16x16/edit-paste.png</normaloff>:/images/16x16/edit-paste.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;PastePreserveLayers</string>
+   </property>
   </action>
   <action name="actionRandomize">
-    <property name="enabled">
-      <bool>false</bool>
-    </property>
-    <property name="icon">
-      <iconset resource="tiled.qrc">
-        <normaloff>:/images/16x16/edit-paste.png</normaloff>:/images/16x16/edit-paste.png
-      </iconset>
-    </property>
-    <property name="text">
-      <string>&amp;Randomize</string>
-    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/16x16/edit-paste.png</normaloff>:/images/16x16/edit-paste.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Randomize</string>
+   </property>
   </action>
   <action name="actionRandomizeLayer">
-    <property name="enabled">
-      <bool>false</bool>
-    </property>
-    <property name="icon">
-      <iconset resource="tiled.qrc">
-        <normaloff>:/images/16x16/edit-paste.png</normaloff>:/images/16x16/edit-paste.png
-      </iconset>
-    </property>
-    <property name="text">
-      <string>&amp;RandomizeLayer</string>
-    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/16x16/edit-paste.png</normaloff>:/images/16x16/edit-paste.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;RandomizeLayer</string>
+   </property>
   </action>
   <action name="actionRandomizeLevel">
-    <property name="enabled">
-      <bool>false</bool>
-    </property>
-    <property name="icon">
-      <iconset resource="tiled.qrc">
-        <normaloff>:/images/16x16/edit-paste.png</normaloff>:/images/16x16/edit-paste.png
-      </iconset>
-    </property>
-    <property name="text">
-      <string>&amp;RandomizeLevel</string>
-    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/16x16/edit-paste.png</normaloff>:/images/16x16/edit-paste.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;RandomizeLevel</string>
+   </property>
   </action>
-  <!--EDEN CHANGE END-->
   <action name="actionAbout">
    <property name="icon">
     <iconset resource="tiled.qrc">
@@ -921,6 +910,14 @@
   <action name="actionUnloadAllWorlds">
    <property name="text">
     <string>Unload All Worlds</string>
+   </property>
+  </action>
+  <action name="actionSnapToOverride">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Snap to &amp;Tile Size</string>
    </property>
   </action>
  </widget>

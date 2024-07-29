@@ -23,6 +23,10 @@
 
 #include "preferences.h"
 
+#include "documentmanager.h"
+#include "mapeditor.h"
+#include "tilesetdock.h"
+
 namespace Tiled {
 
 SnapHelper::SnapHelper(const MapRenderer *renderer,
@@ -34,6 +38,8 @@ SnapHelper::SnapHelper(const MapRenderer *renderer,
         mSnapMode = SnapToGrid;
     else if (preferences->snapToFineGrid())
         mSnapMode = SnapToFineGrid;
+    else if (preferences->snapToOverride())
+        mSnapMode = SnapToOverride;
 
     mSnapToPixels = preferences->snapToPixels();
 
@@ -54,6 +60,7 @@ void SnapHelper::toggleSnap()
         break;
     case SnapToGrid:
     case SnapToFineGrid:
+    case SnapToOverride:
         mSnapMode = NoSnap;
         break;
     }
@@ -64,9 +71,24 @@ void SnapHelper::toggleFineSnap()
     switch (mSnapMode) {
     case NoSnap:
     case SnapToGrid:
+    case SnapToOverride:
         mSnapMode = SnapToFineGrid;
         break;
     case SnapToFineGrid:
+        mSnapMode = SnapToGrid;
+        break;
+    }
+}
+
+void SnapHelper::toggleOverrideSnap()
+{
+    switch (mSnapMode) {
+    case NoSnap:
+    case SnapToGrid:
+    case SnapToFineGrid:
+        mSnapMode = SnapToOverride;
+        break;
+    case SnapToOverride:
         mSnapMode = SnapToGrid;
         break;
     }
@@ -78,6 +100,14 @@ void SnapHelper::snap(QPointF &pixelPos) const
         if (mSnapMode == SnapToFineGrid) {
             const int gridFine = Preferences::instance()->gridFine();
             pixelPos = mRenderer->snapToGrid(pixelPos, gridFine);
+        } else if (mSnapMode == SnapToOverride){
+            auto documentManager = DocumentManager::instance();
+            auto mapEditor = static_cast<MapEditor*>(documentManager->editor(Document::MapDocumentType));
+            TilesetDock *tilesetDock = mapEditor->tilesetDock();
+            if ( Tile *currentTile = tilesetDock->currentTile())
+            {
+                pixelPos = mRenderer->snapToOverride(pixelPos, QPointF(currentTile->width(), currentTile->height()));
+            }
         } else {
             pixelPos = mRenderer->snapToGrid(pixelPos);
         }

@@ -62,6 +62,9 @@ public:
     bool showObjectReferences() const;
     bool parallaxEnabled() const;
     bool snapToGrid() const;
+    /// EDEN CHANGES
+    bool snapToOverride() const;
+    /// END EDEN CHANGES
     bool snapToFineGrid() const;
     bool snapToPixels() const;
     QColor gridColor() const;
@@ -192,6 +195,9 @@ public slots:
     void setShowObjectReferences(bool enabled);
     void setParallaxEnabled(bool enabled);
     void setSnapToGrid(bool snapToGrid);
+    /// EDEN CHANGES
+    void setSnapToOverride(bool snapToOverride);
+    /// END EDEN CHANGES
     void setSnapToFineGrid(bool snapToFineGrid);
     void setSnapToPixels(bool snapToPixels);
     void setGridColor(QColor gridColor);
@@ -219,6 +225,9 @@ signals:
     void showObjectReferencesChanged(bool enabled);
     void parallaxEnabledChanged(bool enabled);
     void snapToGridChanged(bool snapToGrid);
+    /// EDEN CHANGES
+    void snapToOverrideChanged(bool snapToOverride);
+    /// END EDEN CHANGES
     void snapToFineGridChanged(bool snapToFineGrid);
     void snapToPixelsChanged(bool snapToPixels);
     void gridColorChanged(QColor gridColor);
