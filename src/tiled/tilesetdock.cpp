@@ -314,7 +314,7 @@ void TilesetDock::setMapDocument(MapDocument *mapDocument)
 #endif
 
     setCurrentTiles(nullptr);
-    setCurrentTile(nullptr);
+    //setCurrentTile(nullptr);
 
     // Clear all connections to the previous document
     if (mMapDocument)
