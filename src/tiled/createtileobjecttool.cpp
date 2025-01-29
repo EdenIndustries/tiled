@@ -239,7 +239,8 @@ void CreateTileObjectTool::copySpecificProperties(MapObject* newMapObject, Tile*
     if (property.contains(QStringLiteral("Wavy"))
       || property == QStringLiteral("Name")
       || property == QStringLiteral("Type")
-      || property == QStringLiteral("RandomizedProp"))
+      || property == QStringLiteral("RandomizedProp")
+      || property == QStringLiteral("Source"))
     {
       newMapObject->setProperty(property, value);
     }
